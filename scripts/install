@@ -111,6 +111,20 @@ ynh_script_progression --message="Configuring NGINX web server..." --weight=3
 ynh_add_nginx_config
 
 #=================================================
+# CREATE DATA DIRECTORY
+#=================================================
+ynh_script_progression --message="Creating a data directory..." --weight=1
+
+datadir=/home/yunohost.app/$app
+ynh_app_setting_set --app=$app --key=datadir --value=$datadir
+
+mkdir -p $datadir
+
+chmod 750 "$datadir"
+chmod -R o-rwx "$datadir"
+chown -R $app:www-data "$datadir"
+
+#=================================================
 # SPECIFIC SETUP
 #=================================================
 # YUNOHOST MULTIMEDIA INTEGRATION
@@ -124,16 +138,11 @@ ynh_multimedia_build_main_dir
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
-config_path="/var/lib/$app"
-ynh_app_setting_set --app=$app --key=config_path --value=$config_path
-
-mkdir -p "$config_path"
-
 # Main config File
-ynh_add_config --template="../conf/navidrome.toml" --destination="$config_path/navidrome.toml"
+ynh_add_config --template="../conf/navidrome.toml" --destination="$datadir/navidrome.toml"
 
-chmod 600 "$config_path/navidrome.toml"
-chown -R $app:$app "$config_path"
+chmod 600 "$datadir/navidrome.toml"
+chown -R $app:$app "$datadir"
 
 #=================================================
 # SETUP SYSTEMD
