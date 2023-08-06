@@ -48,6 +48,9 @@ Navidrome indexes all digital music stored in your hard drive and makes it avail
 * YunoHost documentation for this app: <https://yunohost.org/app_navidrome>
 * Report a bug: <https://github.com/YunoHost-Apps/navidrome_ynh/issues>
 
+## Main configuration
+/var/lib/navidrome/navidrome.toml
+
 ## Developer info
 
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/navidrome_ynh/tree/testing).
